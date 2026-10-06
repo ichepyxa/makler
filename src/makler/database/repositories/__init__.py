@@ -1,7 +1,13 @@
 from makler.database.repositories.district_repository import DistrictRepository
-from makler.database.repositories.request_repository import RequestRepository
+from makler.database.repositories.exchange_repository import ExchangeRepository
+from makler.database.repositories.request_repository import (
+  RequestRepository,
+  StoredRequest,
+)
 
 __all__ = [
   "DistrictRepository",
-  "RequestRepository"
+  "ExchangeRepository",
+  "RequestRepository",
+  "StoredRequest"
 ]

@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -8,6 +10,11 @@ from makler.database.models import (
 )
 from makler.domain import Apartment, ExchangeRequest
 
+
+@dataclass(frozen=True, slots=True)
+class StoredRequest:
+  id: int
+  request: ExchangeRequest
 
 class RequestRepository:
   def __init__(self, session: Session) -> None:
@@ -55,6 +62,22 @@ class RequestRepository:
 
     return [
       self._to_domain(model)
+      for model in models
+    ]
+
+  def get_all_with_ids(self) -> list[StoredRequest]:
+    statement = select(ExchangeRequestModel).order_by(
+      ExchangeRequestModel.created_at,
+      ExchangeRequestModel.id,
+    )
+
+    models = list(self.session.scalars(statement))
+
+    return [
+      StoredRequest(
+        id=model.id,
+        request=self._to_domain(model),
+      )
       for model in models
     ]
 

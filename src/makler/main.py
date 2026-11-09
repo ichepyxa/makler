@@ -1,29 +1,23 @@
 import sys
 
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
+from PySide6.QtWidgets import QApplication
 
+from makler.database.database import Database
+from makler.ui.main_window import MainWindow
+from makler.ui.styles import MAIN_STYLE
 
-class MainWindow(QMainWindow):
-  def __init__(self) -> None:
-    super().__init__()
-
-    self.setWindowTitle("Маклер")
-    self.resize(1000, 700)
-
-    label = QLabel("Программа Маклер")
-    label.setStyleSheet("font-size: 24px;")
-    label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    
-    self.setCentralWidget(label)
 
 def main() -> int:
-  app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
+    app.setStyleSheet(MAIN_STYLE)
 
-  window = MainWindow()
-  window.show()
+    database = Database()
+    database.create_tables()
 
-  return app.exec()
+    window = MainWindow(database)
+    window.show()
+
+    return app.exec()
 
 
 if __name__ == "__main__":

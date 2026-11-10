@@ -24,17 +24,21 @@ class HistoryPage(QWidget):
             [
                 "№",
                 "Дата обмена",
-                "Заявка 1 — ищет",
-                "Заявка 1 — предлагает",
-                "Заявка 2 — ищет",
-                "Заявка 2 — предлагает",
+                "Заявка 1\n(ищет)",
+                "Заявка 1\n(предлагает)",
+                "Заявка 2\n(ищет)",
+                "Заявка 2\n(предлагает)",
             ]
         )
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.verticalHeader().setVisible(False)
         self.table.setWordWrap(True)
-        self.table.horizontalHeader().setSectionResizeMode(
+
+        header = self.table.horizontalHeader()
+        header.setMinimumHeight(55)
+
+        header.setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
 

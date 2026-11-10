@@ -22,8 +22,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.database = database
         self.setWindowTitle("Маклер — учёт заявок на обмен квартир")
-        self.resize(1280, 820)
         self.setMinimumSize(950, 650)
+        self.move(100, 100)
 
         self.sidebar = Sidebar()
         self.pages = QStackedWidget()

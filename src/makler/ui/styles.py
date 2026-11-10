@@ -2,313 +2,143 @@ MAIN_STYLE = """
 * {
     font-family: "SF Pro Display", "Segoe UI", Arial, sans-serif;
     font-size: 14px;
+    color: #172033;
 }
-
-QMainWindow {
+QMainWindow, QWidget#page, QStackedWidget {
     background: #f7f9fc;
+    color: #172033;
 }
-
-QWidget {
-    color: #111827;
+QLabel {
+    color: #172033;
 }
-
-QScrollArea,
-QScrollArea QWidget {
-    background: #f7f9fc;
-    border: none;
-}
-
-/* SIDEBAR */
-
 #sidebar {
     background: #edf5ff;
     border-right: 1px solid #d7e3f1;
 }
-
-#sidebarItem {
-    background: transparent;
-    border: none;
-    border-radius: 9px;
+#navButton, #exitButton {
+    min-height: 48px;
+    padding: 8px 12px;
     text-align: left;
-}
-
-#sidebarItem:hover {
-    background: #e3effd;
-}
-
-#sidebarItem:checked {
-    background: #d9eaff;
-}
-
-#sidebarIcon {
-    color: #155a91;
-    font-size: 42px;
-}
-
-#sidebarIconAdd {
-    background: #0789df;
-    color: white;
-    border-radius: 9px;
-    font-size: 40px;
-}
-
-#sidebarTitle {
     color: #10345d;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-#sidebarDescription {
-    color: #5d789c;
-    font-size: 15px;
-}
-
-/* PAGE */
-
-#requestPage {
-    background: #f7f9fc;
-}
-
-#pageHeadingIcon {
-    color: #2788dc;
-    font-size: 46px;
-    font-weight: 500;
-}
-
-#pageTitle {
-    color: #101828;
-    font-size: 30px;
-    font-weight: 800;
-}
-
-#pageDescription {
-    color: #66809f;
-    font-size: 16px;
-}
-
-/* REQUEST CARD */
-
-#requestCard {
-    background: #ffffff;
-    border: 1px solid #bfccde;
-    border-radius: 11px;
-}
-
-#requestCardHeader {
-    background: #f0f3f8;
-    border-bottom: 1px solid #d5deea;
-}
-
-#requestCardTitle {
-    font-size: 22px;
-    font-weight: 700;
-    color: #15213b;
-}
-
-#closeButton {
     background: transparent;
     border: none;
-    color: #17233d;
-    font-size: 30px;
-}
-
-#closeButton:hover {
-    color: #2788dc;
-}
-
-/* APARTMENT FORMS */
-
-#apartmentForm {
-    background: white;
-    border: 1px solid #c9d8ea;
-    border-radius: 7px;
-}
-
-#apartmentForm[accent="blue"] {
-    border-color: #bdd6f5;
-}
-
-#apartmentForm[accent="green"] {
-    border-color: #b9ddc7;
-}
-
-QLabel#apartmentFormTitle {
-    background: #eaf3ff;
-    color: #075aa6;
-    padding: 12px 20px;
-    font-size: 19px;
-    font-weight: 700;
-}
-
-#apartmentForm[accent="green"] QLabel#apartmentFormTitle {
-    background: #eaf7ef;
-    color: #075a32;
-}
-
-#apartmentFormBody {
-    background: #ffffff;
-    border-radius: 7px;
-}
-
-#fieldLabel {
-    color: #182033;
-    font-size: 16px;
-}
-
-QSpinBox,
-QDoubleSpinBox,
-QComboBox {
-    min-height: 36px;
-    background: #ffffff;
-    border: 1px solid #bec9d7;
-    border-radius: 5px;
-    padding: 0 9px;
-    color: #111827;
-    font-size: 16px;
-}
-
-QSpinBox:focus,
-QDoubleSpinBox:focus,
-QComboBox:focus {
-    border: 1px solid #348bd3;
-}
-
-/* BUTTONS */
-
-#findButton {
-    background: #2187d9;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    padding: 0 22px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
 }
-
-#findButton:hover {
+#navButton:hover, #exitButton:hover {
+    background: #e3effd;
+}
+#navButton:checked {
+    background: #d9eaff;
+}
+#pageTitle {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+}
+#pageDescription {
+    color: #607d9f;
+    font-size: 14px;
+}
+#contentCard {
+    background: white;
+    border: 1px solid #cbd7e6;
+    border-radius: 10px;
+}
+QGroupBox#apartmentForm {
+    background: white;
+    border: 1px solid #cbd7e6;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+QGroupBox#apartmentForm[accent="blue"] {
+    border-color: #b9d5f5;
+}
+QGroupBox#apartmentForm[accent="green"] {
+    border-color: #b9ddc7;
+}
+QGroupBox#apartmentForm::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 2px 6px;
+    color: #075aa6;
+}
+QGroupBox#apartmentForm[accent="green"]::title {
+    color: #075a32;
+}
+QSpinBox, QDoubleSpinBox, QComboBox, QAbstractSpinBox {
+    min-height: 32px;
+    padding: 2px 7px;
+    border: 1px solid #bec9d7;
+    border-radius: 5px;
+    background: white;
+    color: #172033;
+    selection-background-color: #dcecff;
+    selection-color: #172033;
+}
+QComboBox QAbstractItemView {
+    background: white;
+    color: #172033;
+    selection-background-color: #dcecff;
+    selection-color: #172033;
+}
+QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {
+    border: 1px solid #2788dc;
+}
+#primaryButton, #secondaryButton {
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+#primaryButton {
+    background: #2187d9;
+    color: white;
+    border: none;
+}
+#primaryButton:hover {
     background: #1478c8;
 }
-
-#findButton:pressed {
-    background: #0f68b0;
-}
-
-#cancelButton {
+#secondaryButton {
     background: white;
     color: #172033;
     border: 1px solid #aeb9c8;
-    border-radius: 7px;
-    padding: 0 20px;
-    font-size: 16px;
 }
-
-#cancelButton:hover {
-    background: #f2f5f9;
+#resultLabel {
+    padding: 14px;
+    border-radius: 8px;
+    background: #edf5ff;
+    border: 1px solid #b8d4f2;
+    color: #075aa6;
 }
-
-/* MATCH RESULT */
-
-#matchResult {
-    background: #f1fbf5;
-    border: 1px solid #a9dabb;
-    border-radius: 9px;
-}
-
-#matchCheck {
-    background: #168b45;
-    color: white;
-    border-radius: 22px;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-#matchResultTitle {
-    color: #05662f;
-    font-size: 19px;
-    font-weight: 800;
-}
-
-#matchResultDescription {
-    color: #173f2b;
-    font-size: 15px;
-}
-
-#matchDetails {
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid #acd9bc;
-    border-radius: 5px;
-}
-
-#matchDetail {
-    color: #173f2b;
-    padding: 8px;
-    font-size: 14px;
-}
-
-/* REGISTRY */
-
-#registryIcon {
-    color: #2586d5;
-    font-size: 36px;
-}
-
-#sectionTitle {
-    font-size: 25px;
-    font-weight: 800;
-    color: #111827;
-}
-
-#desiredTableHeader {
-    background: #dceaff;
-    color: #0755a5;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 8px;
-    border: 1px solid #c4d9f2;
-}
-
-#offeredTableHeader {
-    background: #e0f2e5;
+#resultLabel[state="success"] {
+    background: #f0faf3;
+    border-color: #a9dabb;
     color: #075a32;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 8px;
-    border: 1px solid #c3dfcb;
 }
-
-#registryTable {
+#dataTable {
     background: white;
-    alternate-background-color: #f7f9fc;
+    alternate-background-color: #f5f8fc;
     border: 1px solid #ccd6e2;
     gridline-color: #d9e0e8;
     selection-background-color: #dcecff;
     selection-color: #111827;
-    font-size: 14px;
 }
-
-#registryTable QHeaderView::section {
-    background: #f1f3f7;
-    color: #111827;
+#dataTable QHeaderView::section {
+    background: #eef2f7;
+    color: #172033;
     border: 1px solid #d7dee7;
-    padding: 9px 5px;
+    padding: 8px;
     font-weight: 600;
 }
-
-#registryTable QTableCornerButton::section {
-    background: #f1f3f7;
-    border: 1px solid #d7dee7;
+QTableWidget {
+    color: #172033;
 }
-
-#matchResult[state="info"] {
-    background: #edf5ff;
-    border: 1px solid #b8d4f2;
-}
-
-#matchResult[state="info"] #matchCheck {
-    background: #2788dc;
-}
-
-#matchResult[state="info"] #matchResultTitle {
-    color: #075aa6;
+QTableWidget::item {
+    color: #172033;
 }
 """

@@ -1,7 +1,7 @@
 [project]
 name = "makler"
 version = "0.1.0"
-description = "Add your description here"
+description = "Программа «Маклер» дял учета заявок на обмен квартир"
 readme = "README.md"
 authors = [
     { name = "k0vcheg", email = "52414665+ichepyxa@users.noreply.github.com" }
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-makler = "makler:main"
+makler = "makler.main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.22,<0.13.0"]

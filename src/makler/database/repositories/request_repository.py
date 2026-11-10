@@ -1,143 +1,144 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from makler.database.models import (
-  ApartmentModel,
-  DistrictModel,
-  ExchangeRequestModel,
+    ApartmentModel,
+    DistrictModel,
+    ExchangeRequestModel,
 )
 from makler.domain import Apartment, ExchangeRequest
 
 
 @dataclass(frozen=True, slots=True)
 class StoredRequest:
-  id: int
-  request: ExchangeRequest
+    id: int
+    request: ExchangeRequest
+    created_at: datetime
+
 
 class RequestRepository:
-  def __init__(self, session: Session) -> None:
-    self.session = session
+    def __init__(self, session: Session) -> None:
+        self.session = session
 
-  def add(self, request: ExchangeRequest) -> ExchangeRequestModel:
-    desired_district = self._get_or_create_district(
-      request.desired.district,
-    )
-    offered_district = self._get_or_create_district(
-      request.offered.district,
-    )
+    def add(self, request: ExchangeRequest) -> ExchangeRequestModel:
+        desired_district = self._get_or_create_district(
+            request.desired.district
+        )
+        offered_district = self._get_or_create_district(
+            request.offered.district
+        )
 
-    desired_apartment = ApartmentModel(
-      rooms=request.desired.rooms,
-      area=request.desired.area,
-      floor=request.desired.floor,
-      district=desired_district,
-    )
+        desired_apartment = ApartmentModel(
+            rooms=request.desired.rooms,
+            area=request.desired.area,
+            floor=request.desired.floor,
+            district=desired_district,
+        )
 
-    offered_apartment = ApartmentModel(
-      rooms=request.offered.rooms,
-      area=request.offered.area,
-      floor=request.offered.floor,
-      district=offered_district,
-    )
+        offered_apartment = ApartmentModel(
+            rooms=request.offered.rooms,
+            area=request.offered.area,
+            floor=request.offered.floor,
+            district=offered_district,
+        )
 
-    model = ExchangeRequestModel(
-      desired_apartment=desired_apartment,
-      offered_apartment=offered_apartment,
-    )
+        model = ExchangeRequestModel(
+            desired_apartment=desired_apartment,
+            offered_apartment=offered_apartment,
+        )
 
-    self.session.add(model)
-    self.session.flush()
+        self.session.add(model)
+        self.session.flush()
 
-    return model
+        return model
 
-  def get_all(self) -> list[ExchangeRequest]:
-    statement = select(ExchangeRequestModel).order_by(
-      ExchangeRequestModel.created_at,
-      ExchangeRequestModel.id,
-    )
+    def get_all(self) -> list[ExchangeRequest]:
+        return [
+            item.request
+            for item in self.get_all_with_ids()
+        ]
 
-    models = list(self.session.scalars(statement))
+    def get_all_with_ids(self) -> list[StoredRequest]:
+        statement = (
+            select(ExchangeRequestModel)
+            .order_by(
+                ExchangeRequestModel.created_at,
+                ExchangeRequestModel.id,
+            )
+        )
 
-    return [
-      self._to_domain(model)
-      for model in models
-    ]
+        models = list(self.session.scalars(statement))
 
-  def get_all_with_ids(self) -> list[StoredRequest]:
-    statement = select(ExchangeRequestModel).order_by(
-      ExchangeRequestModel.created_at,
-      ExchangeRequestModel.id,
-    )
+        return [
+            StoredRequest(
+                id=model.id,
+                request=self._to_domain(model),
+                created_at=model.created_at,
+            )
+            for model in models
+        ]
 
-    models = list(self.session.scalars(statement))
+    def get_by_id(self, request_id: int) -> ExchangeRequest | None:
+        model = self.session.get(
+            ExchangeRequestModel,
+            request_id,
+        )
 
-    return [
-      StoredRequest(
-        id=model.id,
-        request=self._to_domain(model),
-      )
-      for model in models
-    ]
+        if model is None:
+            return None
 
-  def get_by_id(self, request_id: int) -> ExchangeRequest | None:
-    model = self.session.get(
-      ExchangeRequestModel,
-      request_id,
-    )
+        return self._to_domain(model)
 
-    if model is None:
-      return None
+    def delete(self, request_id: int) -> bool:
+        model = self.session.get(
+            ExchangeRequestModel,
+            request_id,
+        )
 
-    return self._to_domain(model)
+        if model is None:
+            return False
 
-  def delete(self, request_id: int) -> bool:
-    model = self.session.get(
-      ExchangeRequestModel,
-      request_id,
-    )
+        self.session.delete(model)
+        self.session.flush()
 
-    if model is None:
-      return False
+        return True
 
-    self.session.delete(model)
-    self.session.flush()
+    def _get_or_create_district(self, name: str) -> DistrictModel:
+        normalized_name = name.strip()
 
-    return True
+        statement = select(DistrictModel).where(
+            DistrictModel.name == normalized_name
+        )
 
-  def _get_or_create_district(self, name: str) -> DistrictModel:
-    normalized_name = name.strip()
+        district = self.session.scalar(statement)
 
-    statement = select(DistrictModel).where(
-      DistrictModel.name == normalized_name,
-    )
-    district = self.session.scalar(statement)
+        if district is not None:
+            return district
 
-    if district is not None:
-      return district
+        district = DistrictModel(name=normalized_name)
+        self.session.add(district)
+        self.session.flush()
 
-    district = DistrictModel(name=normalized_name)
-    self.session.add(district)
-    self.session.flush()
+        return district
 
-    return district
-
-  @staticmethod
-  def _to_domain(
-      model: ExchangeRequestModel,
-  ) -> ExchangeRequest:
-    return ExchangeRequest(
-      desired=Apartment(
-        rooms=model.desired_apartment.rooms,
-        area=model.desired_apartment.area,
-        floor=model.desired_apartment.floor,
-        district=model.desired_apartment.district.name,
-      ),
-      offered=Apartment(
-        rooms=model.offered_apartment.rooms,
-        area=model.offered_apartment.area,
-        floor=model.offered_apartment.floor,
-        district=model.offered_apartment.district.name,
-      ),
-    )
+    @staticmethod
+    def _to_domain(
+        model: ExchangeRequestModel,
+    ) -> ExchangeRequest:
+        return ExchangeRequest(
+            desired=Apartment(
+                rooms=model.desired_apartment.rooms,
+                area=model.desired_apartment.area,
+                floor=model.desired_apartment.floor,
+                district=model.desired_apartment.district.name,
+            ),
+            offered=Apartment(
+                rooms=model.offered_apartment.rooms,
+                area=model.offered_apartment.area,
+                floor=model.offered_apartment.floor,
+                district=model.offered_apartment.district.name,
+            ),
+        )

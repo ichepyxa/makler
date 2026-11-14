@@ -8,17 +8,17 @@ from makler.ui.styles import MAIN_STYLE
 
 
 def main() -> int:
-    app = QApplication(sys.argv)
-    app.setStyleSheet(MAIN_STYLE)
+  app = QApplication(sys.argv)
+  app.setStyleSheet(MAIN_STYLE)
 
-    database = Database()
-    database.create_tables()
+  database = Database()
+  database.create_tables()
 
-    window = MainWindow(database)
-    window.show()
+  window = MainWindow(database)
+  window.show()
 
-    return app.exec()
+  return app.exec()
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+  raise SystemExit(main())

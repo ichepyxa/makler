@@ -1,9 +1,9 @@
 from makler.database.repositories.request_repository import (
-    RequestRepository,
-    StoredRequest,
+  RequestRepository,
+  StoredRequest,
 )
 
 __all__ = [
-    "RequestRepository",
-    "StoredRequest",
+  "RequestRepository",
+  "StoredRequest",
 ]

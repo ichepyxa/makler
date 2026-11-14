@@ -6,7 +6,7 @@ from makler.domain.exchange_request import ExchangeRequest
 
 @dataclass(frozen=True, slots=True)
 class CardIndex:
-    requests: list[ExchangeRequest]
-    desired_apartments: list[Apartment]
-    offered_apartments: list[Apartment]
-    districts: list[str]
+  requests: list[ExchangeRequest]
+  desired_apartments: list[Apartment]
+  offered_apartments: list[Apartment]
+  districts: list[str]

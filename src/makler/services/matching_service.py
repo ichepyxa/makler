@@ -16,7 +16,7 @@ class MatchingService:
 
     first_area = Decimal(str(first.area))
     second_area = Decimal(str(second.area))
-    average_area = (first_area + second_area) / Decimal("2")
+    average_area = (first_area + second_area) / Decimal(2)
     area_difference = abs(first_area - second_area)
 
     return area_difference <= average_area * AREA_TOLERANCE

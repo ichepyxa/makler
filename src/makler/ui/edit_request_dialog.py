@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
   QVBoxLayout,
 )
 
-from makler.domain import Apartment, CITY_DISTRICTS, ExchangeRequest
+from makler.domain import CITY_DISTRICTS, Apartment, ExchangeRequest
 from makler.ui.widgets.apartment_form import ApartmentForm
 
 

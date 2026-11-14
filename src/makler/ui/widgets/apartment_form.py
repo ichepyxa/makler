@@ -1,11 +1,12 @@
 from PySide6.QtCore import QLocale, Qt
 from PySide6.QtWidgets import (
+  QAbstractSpinBox,
   QComboBox,
   QDoubleSpinBox,
   QFormLayout,
   QGroupBox,
-  QSpinBox,
   QSizePolicy,
+  QSpinBox,
 )
 
 from makler.domain import Apartment
@@ -24,10 +25,16 @@ class ApartmentForm(QGroupBox):
     self.setProperty("accent", accent)
 
     self.rooms_spin = QSpinBox()
+    self.rooms_spin.setButtonSymbols(
+      QAbstractSpinBox.ButtonSymbols.UpDownArrows
+    )
     self.rooms_spin.setRange(1, 20)
     self.rooms_spin.setValue(2)
 
     self.area_spin = QDoubleSpinBox()
+    self.area_spin.setButtonSymbols(
+      QAbstractSpinBox.ButtonSymbols.UpDownArrows
+    )
     self.area_spin.setRange(1.0, 1000.0)
     self.area_spin.setDecimals(1)
     self.area_spin.setLocale(QLocale("ru_RU"))
@@ -35,6 +42,9 @@ class ApartmentForm(QGroupBox):
     self.area_spin.setSuffix(" м²")
 
     self.floor_spin = QSpinBox()
+    self.floor_spin.setButtonSymbols(
+      QAbstractSpinBox.ButtonSymbols.UpDownArrows
+    )
     self.floor_spin.setRange(1, 100)
     self.floor_spin.setValue(5)
 

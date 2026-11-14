@@ -3,7 +3,7 @@ from pathlib import Path
 from makler.database import Database
 from makler.database.models import ApartmentModel
 from makler.database.repositories import RequestRepository
-from makler.domain import Apartment, CITY_DISTRICTS, ExchangeRequest
+from makler.domain import CITY_DISTRICTS, Apartment, ExchangeRequest
 from makler.services.request_service import RequestService
 
 

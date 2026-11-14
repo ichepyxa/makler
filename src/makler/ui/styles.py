@@ -79,27 +79,28 @@ QGroupBox#apartmentForm::title {
 QGroupBox#apartmentForm[accent="green"]::title {
   color: #075a32;
 }
-QSpinBox, QDoubleSpinBox, QComboBox, QAbstractSpinBox {
-  min-height: 32px;
-  padding: 2px 7px;
+QSpinBox, QDoubleSpinBox {
+  min-height: 38px;
+  padding: 2px 10px;
   border: 1px solid #bec9d7;
-  border-radius: 5px;
-  background: white;
+  border-radius: 6px;
+  background-color: white;
   color: #172033;
   selection-background-color: #dcecff;
   selection-color: #172033;
 }
-QSpinBox::up-button, QDoubleSpinBox::up-button,
-QSpinBox::down-button, QDoubleSpinBox::down-button {
-  background-color: #f0f4f8;
-  border-left: 1px solid #d5dde7;
-  width: 18px;
+QSpinBox:focus, QDoubleSpinBox:focus {
+  border: 1px solid #2788dc;
 }
-QSpinBox::up-button, QDoubleSpinBox::up-button {
-  border-top-right-radius: 4px;
-}
-QSpinBox::down-button, QDoubleSpinBox::down-button {
-  border-bottom-right-radius: 4px;
+QComboBox {
+  min-height: 38px;
+  padding: 2px 10px;
+  border: 1px solid #bec9d7;
+  border-radius: 6px;
+  background: white;
+  color: #172033;
+  selection-background-color: #dcecff;
+  selection-color: #172033;
 }
 QComboBox QAbstractItemView {
   background: white;
@@ -107,7 +108,7 @@ QComboBox QAbstractItemView {
   selection-background-color: #dcecff;
   selection-color: #172033;
 }
-QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {
+QComboBox:focus {
   border: 1px solid #2788dc;
 }
 #primaryButton, #secondaryButton {

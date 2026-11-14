@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 
 from makler.database.repositories import RequestRepository, StoredRequest
 from makler.domain import (
+  CITY_DISTRICTS,
   Apartment,
   CardIndex,
-  CITY_DISTRICTS,
   ExchangeRequest,
 )
 from makler.services.matching_service import MatchingService

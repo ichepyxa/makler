@@ -11,6 +11,13 @@ QMainWindow, QWidget#page, QStackedWidget {
 QLabel {
     color: #172033;
 }
+QDialog#editRequestDialog, QMessageBox {
+    background-color: #f7f9fc;
+    color: #172033;
+}
+QDialog#editRequestDialog QLabel, QMessageBox QLabel {
+    color: #172033;
+}
 #sidebar {
     background: #edf5ff;
     border-right: 1px solid #d7e3f1;
@@ -50,8 +57,8 @@ QGroupBox#apartmentForm {
     background: white;
     border: 1px solid #cbd7e6;
     border-radius: 8px;
-    margin-top: 10px;
-    padding-top: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
     font-size: 16px;
     font-weight: 600;
 }
@@ -63,8 +70,10 @@ QGroupBox#apartmentForm[accent="green"] {
 }
 QGroupBox#apartmentForm::title {
     subcontrol-origin: margin;
+    subcontrol-position: top left;
     left: 12px;
-    padding: 2px 6px;
+    padding: 1px 8px;
+    background-color: white;
     color: #075aa6;
 }
 QGroupBox#apartmentForm[accent="green"]::title {
@@ -79,6 +88,18 @@ QSpinBox, QDoubleSpinBox, QComboBox, QAbstractSpinBox {
     color: #172033;
     selection-background-color: #dcecff;
     selection-color: #172033;
+}
+QSpinBox::up-button, QDoubleSpinBox::up-button,
+QSpinBox::down-button, QDoubleSpinBox::down-button {
+    background-color: #f0f4f8;
+    border-left: 1px solid #d5dde7;
+    width: 18px;
+}
+QSpinBox::up-button, QDoubleSpinBox::up-button {
+    border-top-right-radius: 4px;
+}
+QSpinBox::down-button, QDoubleSpinBox::down-button {
+    border-bottom-right-radius: 4px;
 }
 QComboBox QAbstractItemView {
     background: white;
@@ -140,5 +161,17 @@ QTableWidget {
 }
 QTableWidget::item {
     color: #172033;
+}
+#dangerButton {
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    background: #fff5f5;
+    color: #a52828;
+    border: 1px solid #e3b6b6;
+    font-weight: 600;
+}
+#dangerButton:hover {
+    background: #ffe8e8;
 }
 """

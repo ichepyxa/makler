@@ -8,20 +8,14 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from makler.domain import CITY_DISTRICTS
 from makler.ui.widgets.apartment_form import ApartmentForm
 
-DISTRICTS = [
-    "Центральный",
-    "Московский",
-    "Советский",
-    "Первомайский",
-    "Партизанский",
-    "Фрунзенский",
-]
+DISTRICTS = list(CITY_DISTRICTS)
 
 
 class RequestPage(QWidget):
-    request_submitted = Signal(dict)
+    requestsubmit_requestted = Signal(dict)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -57,11 +51,11 @@ class RequestPage(QWidget):
 
         submit_button = QPushButton("Проверить обмен и обработать заявку")
         submit_button.setObjectName("primaryButton")
-        submit_button.clicked.connect(self._submit)
+        submit_button.clicked.connect(self.submit_request)
 
         clear_button = QPushButton("Очистить")
         clear_button.setObjectName("secondaryButton")
-        clear_button.clicked.connect(self._clear)
+        clear_button.clicked.connect(self.clear_form)
 
         buttons = QHBoxLayout()
         buttons.addStretch()
@@ -85,16 +79,16 @@ class RequestPage(QWidget):
         layout.addWidget(self.result_label)
         layout.addStretch()
 
-    def _submit(self) -> None:
+    def submit_request(self) -> None:
         self.result_label.hide()
-        self.request_submitted.emit(
+        self.requestsubmit_requestted.emit(
             {
                 "desired": self.desired_form.get_values(),
                 "offered": self.offered_form.get_values(),
             }
         )
 
-    def _clear(self) -> None:
+    def clear_form(self) -> None:
         self.desired_form.reset()
         self.offered_form.reset()
         self.offered_form.area_spin.setValue(60.0)
@@ -107,19 +101,19 @@ class RequestPage(QWidget):
         self.result_label.setText(
             "Заявка добавлена в картотеку: подходящего взаимного обмена не найдено."
         )
-        self._refresh_result_style()
+        self.update_result_style()
 
     def show_exchange(self, request_id: int, first: str, second: str) -> None:
         self.result_label.setProperty("state", "success")
         self.result_label.setText(
             f"Найдено соответствие с заявкой № {request_id}.\n"
-            "Обмен сохранён в историю, обе заявки удалены из картотеки.\n\n"
+            "Найденная заявка удалена из картотеки.\n\n"
             f"Заявка из картотеки — ищет: {first}\n"
             f"Заявка из картотеки — предлагает: {second}"
         )
-        self._refresh_result_style()
+        self.update_result_style()
 
-    def _refresh_result_style(self) -> None:
+    def update_result_style(self) -> None:
         self.result_label.style().unpolish(self.result_label)
         self.result_label.style().polish(self.result_label)
         self.result_label.show()

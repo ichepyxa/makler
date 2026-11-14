@@ -16,15 +16,13 @@ class Sidebar(QFrame):
         layout.setContentsMargins(12, 18, 12, 16)
         layout.setSpacing(8)
 
-        for index, title in enumerate(
-            ("＋  Новая заявка", "▤  Картотека", "↔  История обменов")
-        ):
+        for index, title in enumerate(("＋  Новая заявка", "▤  Картотека")):
             button = QPushButton(title)
             button.setObjectName("navButton")
             button.setCheckable(True)
             button.setCursor(Qt.CursorShape.PointingHandCursor)
             button.clicked.connect(
-                lambda checked=False, page=index: self._select(page)
+                lambda checked=False, page=index: self.select_page(page)
             )
             self.buttons.append(button)
             layout.addWidget(button)
@@ -36,9 +34,9 @@ class Sidebar(QFrame):
         exit_button.clicked.connect(self.exit_requested)
         layout.addWidget(exit_button)
 
-        self._select(0)
+        self.select_page(0)
 
-    def _select(self, index: int) -> None:
+    def select_page(self, index: int) -> None:
         for page, button in enumerate(self.buttons):
             button.setChecked(page == index)
         self.page_changed.emit(index)

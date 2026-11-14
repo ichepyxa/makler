@@ -1,11 +1,14 @@
-from PySide6.QtCore import QLocale
+from PySide6.QtCore import QLocale, Qt
 from PySide6.QtWidgets import (
     QComboBox,
     QDoubleSpinBox,
     QFormLayout,
     QGroupBox,
+    QSizePolicy,
     QSpinBox,
 )
+
+from makler.domain import Apartment
 
 
 class ApartmentForm(QGroupBox):
@@ -38,7 +41,26 @@ class ApartmentForm(QGroupBox):
         self.district_combo = QComboBox()
         self.district_combo.addItems(districts)
 
+        for field in (
+            self.rooms_spin,
+            self.area_spin,
+            self.floor_spin,
+            self.district_combo,
+        ):
+            field.setMinimumWidth(190)
+            field.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
+
         layout = QFormLayout(self)
+        layout.setFieldGrowthPolicy(
+            QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow
+        )
+        layout.setLabelAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
+        layout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.DontWrapRows)
         layout.setContentsMargins(16, 20, 16, 16)
         layout.setHorizontalSpacing(12)
         layout.setVerticalSpacing(10)
@@ -54,6 +76,16 @@ class ApartmentForm(QGroupBox):
             "floor": self.floor_spin.value(),
             "district": self.district_combo.currentText(),
         }
+
+    def set_values(self, apartment: Apartment) -> None:
+        self.rooms_spin.setValue(apartment.rooms)
+        self.area_spin.setValue(apartment.area)
+        self.floor_spin.setValue(apartment.floor)
+        index = self.district_combo.findText(apartment.district)
+        if index < 0:
+            self.district_combo.addItem(apartment.district)
+            index = self.district_combo.count() - 1
+        self.district_combo.setCurrentIndex(index)
 
     def reset(self) -> None:
         self.rooms_spin.setValue(2)
